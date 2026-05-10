@@ -1,0 +1,21 @@
+BMS College Semester Examination Schedule
+
+3rd Semester:
+Mathematics - June 10
+Data Structures - June 12
+Operating Systems - June 15
+
+5th Semester:
+DBMS - June 18
+Computer Networks - June 20
+AI Fundamentals - June 24
+
+Internal Assessment 1:
+Starts from August 5
+
+Internal Assessment 2:
+Starts from September 15
+
+Exam Timings:
+Morning Session: 9 AM to 12 PM
+Afternoon Session: 1 PM to 4 PM

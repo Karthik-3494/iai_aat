@@ -1,0 +1,19 @@
+
+Breakfast:
+Idli - Rs 30
+Dosa - Rs 40
+Poori - Rs 35
+
+Lunch:
+Veg Meals - Rs 70
+Chicken Meals - Rs 120
+Fried Rice - Rs 90
+
+Snacks:
+Samosa - Rs 15
+Puffs - Rs 25
+Tea - Rs 10
+Coffee - Rs 15
+
+Canteen Timings:
+8 AM to 6 PM
