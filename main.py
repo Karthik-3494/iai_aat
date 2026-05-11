@@ -78,34 +78,48 @@ Question:
     input_variables=["context", "question"]
 )
 
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
-print("\nCampus Helper Bot Ready!")
-print("Type 'exit' to stop.\n")
+# Initialize the FastAPI app
+app = FastAPI()
 
-while True:
+# Enable CORS so your React frontend can talk to this backend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-    question = input("Ask a question: ")
+# Define the data structure for incoming questions
+class Question(BaseModel):
+    text: str
 
-    if question.lower() == "exit":
-        break
+@app.post("/ask")
+async def ask_bot(question: Question):
+    # 1. Retrieve relevant chunks from the vector store
+    retrieved_docs = retriever.invoke(question.text)
 
-    # Retrieve relevant chunks
-    retrieved_docs = retriever.invoke(question)
-
-    # Combine context
+    # 2. Combine the retrieved text into one context string
     context_text = "\n\n".join(
         doc.page_content for doc in retrieved_docs
     )
 
-    # Create final prompt
+    # 3. Format the prompt with the context and the user's question
     final_prompt = prompt.invoke({
         "context": context_text,
-        "question": question
+        "question": question.text
     })
 
-    # Generate answer
+    # 4. Get the answer from the LLM
     answer = llm.invoke(final_prompt)
 
-    print("\nAnswer:")
-    print(answer.content)
-    print("\n" + "-"*50 + "\n")
+    # 5. Return the answer as JSON to the frontend
+    return {"answer": answer.content}
+
+# Run the server
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
